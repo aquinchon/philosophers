@@ -31,6 +31,8 @@ int	ft_atoi_check(const char *nptr, t_table *table)
 	i = 0;
 	while (nptr[i] == ' ' || (nptr[i] >= 9 && nptr[i] <= 13))
 		i++;
+	if (!(nptr[i] == '+' || (nptr[i] >= '0' && nptr[i] <= '9')))
+		resultat = ft_err_free_exit("Argument incorrect", table);
 	if (nptr[i] == '+' && nptr[i + 1]
 		&& nptr[i + 1] >= '0' && nptr[i + 1] <= '9')
 		i++;
@@ -47,19 +49,39 @@ int	ft_atoi_check(const char *nptr, t_table *table)
 	return (resultat);
 }
 
-void	ft_putnbr(unsigned long long lln)
+/*
+static void	ft_itoa(unsigned long long lln, char *resultat, int i)
 {
-	char	c;
-
 	if (lln <= 9)
-	{
-		c = lln + '0';
-		write (1, &c, 1);
-	}
+		resultat[i] = lln + '0';
 	else
 	{
-		ft_putnbr(lln / 10);
-		c = lln % 10 + '0';
-		write (1, &c, 1);
+		ft_itoa(lln / 10, resultat, i - 1);
+		resultat[i] = lln % 10 + '0';
 	}
 }
+
+void	ft_putnbr(unsigned long long lln, int type)
+{
+	char				*resultat;
+	int					len_nbr;
+	unsigned long long	tmp;
+
+	tmp = lln;
+	len_nbr = 1;
+	while (tmp / 10 > 0)
+	{
+		len_nbr++;
+		tmp /= 10;
+	}
+	resultat = malloc (sizeof(char) * (len_nbr + 2));
+	ft_itoa(lln, resultat, len_nbr - 1);
+	if (type == 0)
+		resultat[len_nbr] = '\t';
+	else
+		resultat[len_nbr] = ' ';
+	resultat[len_nbr + 1] = '\0';
+	write (1, resultat, ft_strlen(resultat));
+	free (resultat);
+}
+*/

@@ -16,9 +16,8 @@ static void	ft_free_mutex(t_table *table)
 {
 	int	i;
 
-	pthread_mutex_destroy(&table->rules->m_rules);
 	pthread_mutex_destroy(&table->msg->m_msg);
-	pthread_mutex_destroy(&table->death->m_death);
+	pthread_mutex_destroy(&table->global->m_nbr_ate_enough);
 	i = 0;
 	while (i < table->rules->nbr_philo)
 	{
@@ -35,8 +34,8 @@ void	ft_free_table(t_table *table)
 		ft_free_mutex(table);
 	if (table->msg)
 		free (table->msg);
-	if (table->death)
-		free (table->death);
+	if (table->global)
+		free (table->global);
 	if (table->rules)
 		free (table->rules);
 	if (table->fork)

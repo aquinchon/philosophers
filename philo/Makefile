@@ -13,13 +13,14 @@
 NAME		= philo
 
 CC			= gcc
-CFLAGS		= -Wall -Werror -Wextra -g #-fsanitize=thread
+CFLAGS		= -Wall -Werror -Wextra -g #-fsanitize=leak -fsanitize=address #-fsanitize=thread
 RM			= rm -f
 
 HEAD_PATH	= ./
 
 SRCS_PATH		= ./
-SRCS_FUNCTIONS	= philo ft_init ft_msg ft_time ft_utils ft_errors ft_free
+SRCS_FUNCTIONS	= philo ft_init ft_supervisor ft_philo_life ft_actions \
+ft_msg ft_time ft_errors ft_free ft_utils
 SRCS_FILES		= $(addsuffix .c, $(SRCS_FUNCTIONS))
 SRCS = $(addprefix $(SRCS_PATH), $(addsuffix .c, $(SRCS_FUNCTIONS)))
 

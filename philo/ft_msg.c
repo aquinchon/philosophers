@@ -29,18 +29,25 @@ static char	*ft_msg_type(int type)
 	return ("error\n");
 }
 
-void	ft_display_msg(t_philo *philo, int type)
+void	ft_display_msg(t_philo *philo, unsigned long long time, int type)
 {
+	if (!philo)
+		return ;
 	pthread_mutex_lock (&philo->msg->m_msg);
+	time = ft_get_timestamp();
+	printf("%lld\t", time - philo->global->start_time);
 	if (type >= 0 && type <= 4)
-	{
-		ft_putnbr(ft_get_timestamp() - philo->start_time->time);
-		write (1, "\t", 1);
-		ft_putnbr(philo->id + 1);
-		write (1, " ", 1);
-	}
+		printf("%d ", philo->id + 1);
 	philo->msg->msg = ft_msg_type(type);
-	write (1, philo->msg->msg, ft_strlen(philo->msg->msg));
-	write (1, "\n", 1);
+	printf("%s\n", ft_msg_type(type));
 	pthread_mutex_unlock (&philo->msg->m_msg);
+}
+
+void	*ft_thr_msg(void *data)
+{
+	t_philo	*philo;
+
+	philo = (t_philo *)data;
+	ft_display_msg(philo, ft_get_timestamp(), philo->msg->type);
+	return (NULL);
 }
